@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../axios";
 
 import { string, z } from "zod";
 import { useForm, Controller } from "react-hook-form";
@@ -46,9 +47,22 @@ export function SignUp() {
     control,
   } = useForm<FormSignIn>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      knowCompany: "2",
+    },
   });
 
-  async function onSingInSubmit() {}
+  async function onSingInSubmit(data: FormSignIn) {
+    if (termoOfUse) {
+      try {
+        const response = await api.post("customers/create", data);
+
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
   return (
     <S.Form onSubmit={handleSubmit(onSingInSubmit)}>
