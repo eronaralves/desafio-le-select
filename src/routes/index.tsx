@@ -4,6 +4,9 @@ import { PrivateRoute } from "./privateRoute";
 // Layout
 import { ContainerLogin } from "../layout/Containerlogin";
 
+// Screens
+import { Login } from "../screens/Login";
+
 export function AppRouter() {
   return (
     <Routes>
@@ -11,7 +14,7 @@ export function AppRouter() {
         path="/login"
         element={
           <ContainerLogin>
-            <h1>Login</h1>
+            <Login />
           </ContainerLogin>
         }
       />
