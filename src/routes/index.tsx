@@ -6,6 +6,7 @@ import { ContainerLogin } from "../layout/Containerlogin";
 
 // Screens
 import { Login } from "../screens/Login";
+import { SignUp } from "../screens/SignUp";
 
 export function AppRouter() {
   return (
@@ -22,7 +23,7 @@ export function AppRouter() {
         path="/signin"
         element={
           <ContainerLogin>
-            <h2>SignIn</h2>
+            <SignUp />
           </ContainerLogin>
         }
       />
