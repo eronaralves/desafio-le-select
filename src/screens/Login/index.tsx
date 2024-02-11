@@ -44,7 +44,7 @@ function Login() {
   const navigate = useNavigate();
 
   function handleToSignin() {
-    navigate("/signin");
+    navigate("/signup");
   }
 
   async function handleSignIn(formData: FormSignUp) {
@@ -52,7 +52,7 @@ function Login() {
       const response = await api.post("/login", formData);
       const data = response.data;
 
-      localStorage.setItem("token", data.access_token);
+      sessionStorage.setItem("token", data.access_token);
 
       toast("Login concluido com sucesso!", {
         type: "success",

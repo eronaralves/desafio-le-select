@@ -20,7 +20,7 @@ export function AppRouter() {
         }
       />
       <Route
-        path="/sigup"
+        path="/signup"
         element={
           <ContainerLogin>
             <ForwardedSignUp />
