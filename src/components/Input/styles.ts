@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import InputMask from 'react-input-mask'
+import InputMask from "react-input-mask";
 
 interface StyleContainerInputProps {
-  icon: boolean;
-  heightInput?: number;
+  icon_show: boolean;
+  height_input?: number;
 }
 
 export const Container = styled.div`
@@ -21,18 +21,20 @@ export const Label = styled.label`
 
 export const ContainerInput = styled.div<StyleContainerInputProps>`
   width: 100%;
-  height: ${({ heightInput }) => heightInput ? `${heightInput}px` : '56px'};
+  height: ${({ height_input }) =>
+    height_input ? `${height_input}px` : "56px"};
 
   display: flex;
   align-items: center;
 
   border-radius: 6px;
-  background-color: ${({ icon, theme }) => icon && theme.colors.white};
+  background-color: ${({ icon_show, theme }) =>
+    icon_show && theme.colors.white};
 
   border: 3px solid ${({ theme }) => theme.colors.white};
 
   &:focus-within {
-    border-color: #6495ED;
+    border-color: #6495ed;
   }
 `;
 
@@ -40,7 +42,7 @@ export const Input = styled(InputMask)`
   width: 100%;
   height: 100%;
   padding: 8px 12px;
-  
+
   font-size: 14px;
   font-weight: 600;
 
@@ -58,7 +60,7 @@ export const Input = styled(InputMask)`
     color: ${({ theme }) => theme.colors.black};
   }
 
-  @media(max-width: 660px) {
+  @media (max-width: 660px) {
     font-size: 12px;
   }
 `;

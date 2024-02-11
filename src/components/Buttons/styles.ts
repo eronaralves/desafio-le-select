@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 
-export type ButtonTypeProps = 'PRIMARY' | 'SECONDARY'
+export type ButtonTypeProps = "PRIMARY" | "SECONDARY";
 
 interface Props {
-  buttonStyle: ButtonTypeProps
+  button_style: ButtonTypeProps;
 }
 
 export const Container = styled.button<Props>`
@@ -20,11 +20,14 @@ export const Container = styled.button<Props>`
   cursor: pointer;
 
   transition: all 0.2s ease-in-out;
-  color: ${({ theme, buttonStyle }) => buttonStyle === 'PRIMARY' ? theme.colors.blue700 : theme.colors.white};
-  background-color: ${({ theme, buttonStyle }) => buttonStyle === 'PRIMARY' ? theme.colors.white : theme.colors.blue700};
+  color: ${({ theme, button_style }) =>
+    button_style === "PRIMARY" ? theme.colors.blue700 : theme.colors.white};
+  background-color: ${({ theme, button_style }) =>
+    button_style === "PRIMARY" ? theme.colors.white : theme.colors.blue700};
 
   &:hover {
-    opacity: ${({ buttonStyle }) => buttonStyle === 'PRIMARY' && '0.8'};
-    background-color: ${({ theme, buttonStyle }) => buttonStyle === 'PRIMARY' ? theme.colors.white : theme.colors.blue300};
+    opacity: ${({ button_style }) => button_style === "PRIMARY" && "0.8"};
+    background-color: ${({ theme, button_style }) =>
+      button_style === "PRIMARY" ? theme.colors.white : theme.colors.blue300};
   }
 `;

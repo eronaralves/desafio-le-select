@@ -5,8 +5,8 @@ import { PrivateRoute } from "./privateRoute";
 import { ContainerLogin } from "../layout/Containerlogin";
 
 // Screens
-import { Login } from "../screens/Login";
-import { SignUp } from "../screens/SignUp";
+import { ForwardedLogin } from "../screens/Login";
+import { ForwardedSignUp } from "../screens/SignUp";
 
 export function AppRouter() {
   return (
@@ -15,20 +15,27 @@ export function AppRouter() {
         path="/login"
         element={
           <ContainerLogin>
-            <Login />
+            <ForwardedLogin />
           </ContainerLogin>
         }
       />
       <Route
-        path="/signin"
+        path="/sigup"
         element={
           <ContainerLogin>
-            <SignUp />
+            <ForwardedSignUp />
           </ContainerLogin>
         }
       />
 
-      <Route path="/" element={<PrivateRoute />} />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <h1>Home</h1>
+          </PrivateRoute>
+        }
+      />
     </Routes>
   );
 }
