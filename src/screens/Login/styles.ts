@@ -4,16 +4,16 @@ export const Form = styled.form`
   width: 100%;
   max-width: 721px;
   height: 100%;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 33px;
-  
+
   padding: 30px 80px;
   background-color: ${({ theme }) => theme.colors.blue500};
-  
-  @media(max-width: 660px) {
+
+  @media (max-width: 660px) {
     padding: 20px;
   }
 `;
@@ -24,7 +24,7 @@ export const LogoLeSelect = styled.img`
   left: 41px;
   top: 44px;
 
-  @media(max-width: 1200px) {
+  @media (max-width: 1200px) {
     width: 113px;
     position: initial;
   }
@@ -46,6 +46,21 @@ export const Title = styled.h1`
   font-size: 36px;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.gray100};
+`;
+
+export const BoxInputs = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  span {
+    height: 10px;
+    margin-top: 4px;
+
+    font-size: 13px;
+    color: red;
+  }
 `;
 
 export const ContentInputs = styled.div`

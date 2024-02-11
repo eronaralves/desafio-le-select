@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { forwardRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../axios";
 
-import { string, z } from "zod";
+import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { toast } from "react-toastify";
 
 // Images
 import LogoLeSelect from "../../assets/images/logo-leselect.png";
@@ -14,7 +16,7 @@ import LogoLePono from "../../assets/images/logos-lepono.png";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 // Components
-import { Input } from "../../components/Input";
+import { ForwardedInput } from "../../components/Input";
 import { Button } from "../../components/Buttons";
 import { FooterForm } from "../../components/FooterForm";
 
@@ -25,18 +27,18 @@ const formSchema = z.object({
   contact_name: z.string().min(1, "Digite seu nome"),
   company: z.string().min(1, "Digite o nome da empresa"),
   taxvat: z.string().min(1, "Digite seu CNPJ"),
-  phone: z.string().min(15, "Coloque os 11 numeros"),
+  phone: z.string().min(14, "Coloque os 10 numeros"),
   email: z.string().min(1, "Digite seu email").email("Digite um email válido"),
   password: z
     .string()
     .min(1, "Digite sua senha")
     .min(5, "Sua senha precisa ter pelo menos 5 caracteres"),
-  knowCompany: string().optional(),
+  knowCompany: z.string().optional(),
 });
 
-export type FormSignIn = z.infer<typeof formSchema>;
+export type FormSignUp = z.infer<typeof formSchema>;
 
-export function SignUp() {
+function SignUp() {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [termoOfUse, setTermoOfUse] = useState(false);
 
@@ -45,19 +47,25 @@ export function SignUp() {
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm<FormSignIn>({
+  } = useForm<FormSignUp>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       knowCompany: "2",
     },
   });
 
-  async function onSingInSubmit(data: FormSignIn) {
+  async function onSingInSubmit(formData: FormSignUp) {
     if (termoOfUse) {
       try {
-        const response = await api.post("customers/create", data);
+        const response = await api.post("customers/create", formData);
+        const data = response.data;
 
-        console.log(response);
+        console.log(data);
+        navigate("/login");
+
+        toast("Cadastrado com sucesso!", {
+          type: "success",
+        });
       } catch (error) {
         console.log(error);
       }
@@ -76,12 +84,12 @@ export function SignUp() {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Input
+              <ForwardedInput
                 type="text"
                 label="Nome"
                 mask=""
                 placeholder="Digite seu nome"
-                heightInput={48}
+                height_input={48}
                 {...field}
               />
             )}
@@ -94,12 +102,12 @@ export function SignUp() {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Input
+              <ForwardedInput
                 type="text"
                 label="Empresa"
                 mask=""
                 placeholder="Digite o nome da empresa"
-                heightInput={48}
+                height_input={48}
                 {...field}
               />
             )}
@@ -114,12 +122,12 @@ export function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <Input
+                <ForwardedInput
                   type="text"
                   label="CNPJ"
                   mask="99.999.999/9999-99"
                   placeholder="00.000.000/0000-00"
-                  heightInput={48}
+                  height_input={48}
                   {...field}
                 />
               )}
@@ -132,12 +140,12 @@ export function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <Input
+                <ForwardedInput
                   type="text"
                   label="Telefone"
-                  mask="(99) 99999-9999"
+                  mask="(99) 9999-9999"
                   placeholder="(xx) xxxx-xxxx"
-                  heightInput={48}
+                  height_input={48}
                   {...field}
                 />
               )}
@@ -153,11 +161,11 @@ export function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <Input
+                <ForwardedInput
                   label="E-mail"
                   mask=""
                   placeholder="Digite seu e-mail"
-                  heightInput={48}
+                  height_input={48}
                   {...field}
                 />
               )}
@@ -170,14 +178,14 @@ export function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <Input
+                <ForwardedInput
                   label="Senha"
                   type={isVisiblePassword ? "text" : "password"}
                   mask=""
                   placeholder="Digite sua senha"
                   icon={isVisiblePassword ? FaRegEye : FaRegEyeSlash}
                   handleIcon={() => setIsVisiblePassword(!isVisiblePassword)}
-                  heightInput={48}
+                  height_input={48}
                   {...field}
                 />
               )}
@@ -197,7 +205,7 @@ export function SignUp() {
           <Button
             type="button"
             title="Voltar"
-            buttonStyle="SECONDARY"
+            button_style="SECONDARY"
             onClick={() => navigate("/login")}
           />
         </S.ContainerButtons>
@@ -207,3 +215,7 @@ export function SignUp() {
     </S.Form>
   );
 }
+
+const ForwardedSignUp = forwardRef(SignUp);
+
+export { ForwardedSignUp };

@@ -1,19 +1,5 @@
-import { useEffect, useState } from "react"
-
-
 export function useAuth() {
-  const [authenticated, setAuthenticated] = useState(false)
+  const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if(token) {
-      setAuthenticated(true)
-    }
-
-  }, [])
-
-  return {
-    authenticated
-  }
+  return token ? true : false;
 }
