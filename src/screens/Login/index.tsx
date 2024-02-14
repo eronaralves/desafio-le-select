@@ -10,7 +10,6 @@ import LogoLePono from "../../assets/images/logos-lepono.png";
 // Components
 import { ForwardedInput } from "../../components/Input";
 import { Button } from "../../components/Buttons";
-import { FooterForm } from "../../components/FooterForm";
 
 // Form
 import { z } from "zod";
@@ -32,7 +31,7 @@ const formSchema = z.object({
 export type FormSignUp = z.infer<typeof formSchema>;
 
 function Login() {
-  const [forgotPassword, setForgotPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     handleSubmit,
@@ -49,6 +48,7 @@ function Login() {
 
   async function handleSignIn(formData: FormSignUp) {
     try {
+      setLoading(true);
       const response = await api.post("/login", formData);
       const data = response.data;
 
@@ -56,17 +56,17 @@ function Login() {
 
       toast("Login concluido com sucesso!", {
         type: "success",
-        autoClose: 1000,
       });
 
       navigate("/");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
 
       toast("Erro ao tentar fazer o login", {
         type: "error",
-        autoClose: 1000,
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -88,6 +88,7 @@ function Login() {
                   type="email"
                   mask=""
                   placeholder="Digite seu e-mail"
+                  disabled={loading}
                   {...field}
                 />
               )}
@@ -106,27 +107,28 @@ function Login() {
                   type="password"
                   mask=""
                   placeholder="Digite sua senha"
+                  disabled={loading}
                   {...field}
                 />
               )}
             />
             <span>{errors.password?.message}</span>
           </S.BoxInputs>
-
-          <FooterForm
-            description="Esqueci minha senha"
-            isChecked={forgotPassword}
-            setChecked={setForgotPassword}
-          />
+          <S.ForgetPassword>Esqueci minha senha</S.ForgetPassword>
         </S.ContentInputs>
 
         <S.ContainerButtons>
-          <Button type="submit" title="Entrar" />
+          <Button
+            type="submit"
+            title={loading ? "Entrandoo..." : "Entrar"}
+            disabled={loading}
+          />
           <Button
             type="button"
             title="Cadastrar"
             button_style="SECONDARY"
             onClick={handleToSignin}
+            disabled={loading}
           />
         </S.ContainerButtons>
       </S.ContentForm>

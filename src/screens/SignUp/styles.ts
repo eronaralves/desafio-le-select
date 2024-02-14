@@ -13,7 +13,7 @@ export const Form = styled.form`
   padding: 80px 80px 30px;
   background-color: ${({ theme }) => theme.colors.blue500};
 
-  @media(max-width: 660px) {
+  @media (max-width: 660px) {
     padding: 20px;
   }
 `;
@@ -24,7 +24,7 @@ export const LogoLeSelect = styled.img`
   left: 41px;
   top: 44px;
 
-  @media(max-width: 1200px) {
+  @media (max-width: 1200px) {
     width: 113px;
     position: initial;
   }
@@ -68,7 +68,7 @@ export const ContainerInputs = styled.div`
   align-items: center;
   gap: 33px;
 
-  @media(max-width: 660px) {
+  @media (max-width: 660px) {
     gap: 10px;
   }
 `;

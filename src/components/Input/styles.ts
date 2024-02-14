@@ -53,6 +53,10 @@ export const Input = styled(InputMask)`
     outline: none;
   }
 
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.white};
+  }
+
   &::placeholder {
     font-weight: 500;
     font-style: italic;

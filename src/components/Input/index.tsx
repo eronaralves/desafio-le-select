@@ -29,7 +29,7 @@ function Input({
       {label && <S.Label htmlFor={label}>{label}</S.Label>}
       <S.ContainerInput
         height_input={height_input}
-        icon_show={IconComponent !== null && true}
+        icon_show={Boolean(IconComponent) && true}
       >
         <S.Input id={label} mask={mask} autoComplete="off" {...rest} />
         {IconComponent && (

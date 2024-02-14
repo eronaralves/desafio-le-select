@@ -68,7 +68,14 @@ export const ContentInputs = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 33px;
+  gap: 25px;
+`;
+
+export const ForgetPassword = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const ContainerButtons = styled.div`
