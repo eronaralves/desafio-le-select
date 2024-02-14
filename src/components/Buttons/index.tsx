@@ -1,22 +1,20 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 
 // Styles
 import * as S from "./styles";
 
-// Intefaces
+// Interfaces
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
-  button_style?: S.ButtonTypeProps;
+  $buttonStyle?: S.ButtonTypeProps;
 }
 
-export function Button({
-  title,
-  button_style = "PRIMARY",
-  ...rest
-}: ButtonProps) {
-  return (
-    <S.Container button_style={button_style} {...rest}>
-      {title}
-    </S.Container>
-  );
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ title, $buttonStyle = "PRIMARY", ...rest }, ref) => {
+    return (
+      <S.Container ref={ref} $button_style={$buttonStyle} {...rest}>
+        {title}
+      </S.Container>
+    );
+  },
+);
