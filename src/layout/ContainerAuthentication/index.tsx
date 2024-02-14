@@ -7,6 +7,6 @@ interface ContainerLoginProps {
   children: ReactNode;
 }
 
-export function ContainerLogin({ children }: ContainerLoginProps) {
+export function ContainerAuthentication({ children }: ContainerLoginProps) {
   return <S.Container>{children}</S.Container>;
 }

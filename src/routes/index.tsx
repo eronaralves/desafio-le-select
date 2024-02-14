@@ -2,11 +2,11 @@ import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "./privateRoute";
 
 // Layout
-import { ContainerLogin } from "../layout/Containerlogin";
+import { ContainerAuthentication } from "../layout/ContainerAuthentication";
 
 // Screens
-import { ForwardedLogin } from "../screens/Login";
-import { ForwardedSignUp } from "../screens/SignUp";
+import { Login } from "../screens/Login";
+import { SignUp } from "../screens/SignUp";
 
 export function AppRouter() {
   return (
@@ -14,17 +14,17 @@ export function AppRouter() {
       <Route
         path="/login"
         element={
-          <ContainerLogin>
-            <ForwardedLogin />
-          </ContainerLogin>
+          <ContainerAuthentication>
+            <Login />
+          </ContainerAuthentication>
         }
       />
       <Route
         path="/signup"
         element={
-          <ContainerLogin>
-            <ForwardedSignUp />
-          </ContainerLogin>
+          <ContainerAuthentication>
+            <SignUp />
+          </ContainerAuthentication>
         }
       />
 

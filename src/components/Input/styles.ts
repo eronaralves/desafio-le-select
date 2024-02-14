@@ -2,7 +2,7 @@ import styled from "styled-components";
 import InputMask from "react-input-mask";
 
 interface StyleContainerInputProps {
-  icon_show: boolean;
+  $icon_show: boolean;
   height_input?: number;
 }
 
@@ -28,8 +28,8 @@ export const ContainerInput = styled.div<StyleContainerInputProps>`
   align-items: center;
 
   border-radius: 6px;
-  background-color: ${({ icon_show, theme }) =>
-    icon_show && theme.colors.white};
+  background-color: ${({ $icon_show, theme }) =>
+    $icon_show && theme.colors.white};
 
   border: 3px solid ${({ theme }) => theme.colors.white};
 

@@ -1,6 +1,6 @@
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../axios";
+import { api } from "../../services";
 
 import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
@@ -16,7 +16,7 @@ import LogoLePono from "../../assets/images/logos-lepono.png";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 // Components
-import { ForwardedInput } from "../../components/Input";
+import { Input } from "../../components/Input";
 import { Button } from "../../components/Buttons";
 import { CheckBoxForm } from "../../components/CheckBoxForm";
 
@@ -38,7 +38,7 @@ const formSchema = z.object({
 
 export type FormSignUp = z.infer<typeof formSchema>;
 
-function SignUp() {
+export function SignUp() {
   const [loading, setLoading] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [termoOfUse, setTermoOfUse] = useState(false);
@@ -60,7 +60,11 @@ function SignUp() {
       try {
         setLoading(true);
 
-        await api.post("customers/create", formData);
+        await api.post("customers/create", formData, {
+          headers: {
+            "company-id": "602d377564ed52767a1b4192",
+          },
+        });
 
         navigate("/login");
 
@@ -107,7 +111,7 @@ function SignUp() {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <ForwardedInput
+              <Input
                 type="text"
                 label="Nome"
                 mask=""
@@ -126,7 +130,7 @@ function SignUp() {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <ForwardedInput
+              <Input
                 type="text"
                 label="Empresa"
                 mask=""
@@ -147,7 +151,7 @@ function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <ForwardedInput
+                <Input
                   type="text"
                   label="CNPJ"
                   mask="99.999.999/9999-99"
@@ -166,7 +170,7 @@ function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <ForwardedInput
+                <Input
                   type="text"
                   label="Telefone"
                   mask="(99) 9999-9999"
@@ -188,7 +192,7 @@ function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <ForwardedInput
+                <Input
                   label="E-mail"
                   mask=""
                   placeholder="Digite seu e-mail"
@@ -206,7 +210,7 @@ function SignUp() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <ForwardedInput
+                <Input
                   label="Senha"
                   type={isVisiblePassword ? "text" : "password"}
                   mask=""
@@ -237,7 +241,7 @@ function SignUp() {
           <Button
             type="button"
             title="Voltar"
-            button_style="SECONDARY"
+            $buttonStyle="SECONDARY"
             onClick={() => navigate("/login")}
             disabled={loading}
           />
@@ -248,7 +252,3 @@ function SignUp() {
     </S.Form>
   );
 }
-
-const ForwardedSignUp = forwardRef(SignUp);
-
-export { ForwardedSignUp };

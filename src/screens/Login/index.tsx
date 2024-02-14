@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import LogoLeSelect from "../../assets/images/logo-leselect.png";
 import LogoLePono from "../../assets/images/logos-lepono.png";
 
 // Components
-import { ForwardedInput } from "../../components/Input";
+import { Input } from "../../components/Input";
 import { Button } from "../../components/Buttons";
 
 // Form
@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Styles
 import * as S from "./styles";
-import { api } from "../../axios";
+import { api } from "../../services";
 
 const formSchema = z.object({
   email: z.string().min(1, "Digite seu email").email("Digite um email válido"),
@@ -30,7 +30,7 @@ const formSchema = z.object({
 
 export type FormSignUp = z.infer<typeof formSchema>;
 
-function Login() {
+export function Login() {
   const [loading, setLoading] = useState(false);
 
   const {
@@ -53,7 +53,7 @@ function Login() {
       const data = response.data;
 
       sessionStorage.setItem("token", data.access_token);
-
+      console.log(data);
       toast("Login concluido com sucesso!", {
         type: "success",
       });
@@ -83,7 +83,7 @@ function Login() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <ForwardedInput
+                <Input
                   label="E-mail"
                   type="email"
                   mask=""
@@ -102,7 +102,7 @@ function Login() {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <ForwardedInput
+                <Input
                   label="Senha"
                   type="password"
                   mask=""
@@ -126,7 +126,7 @@ function Login() {
           <Button
             type="button"
             title="Cadastrar"
-            button_style="SECONDARY"
+            $buttonStyle="SECONDARY"
             onClick={handleToSignin}
             disabled={loading}
           />
@@ -137,7 +137,3 @@ function Login() {
     </S.Form>
   );
 }
-
-const ForwardedLogin = forwardRef(Login);
-
-export { ForwardedLogin };
