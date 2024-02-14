@@ -1,4 +1,4 @@
-import { HtmlHTMLAttributes, useState } from "react";
+import { HtmlHTMLAttributes } from "react";
 
 // Icons
 import { BsXSquare, BsSquare } from "react-icons/bs";
