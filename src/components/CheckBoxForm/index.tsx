@@ -14,7 +14,7 @@ interface FooterFormProps extends HtmlHTMLAttributes<HTMLDivElement> {
   setChecked: any;
 }
 
-export function FooterForm({
+export function CheckBoxForm({
   description,
   isChecked,
   setChecked,

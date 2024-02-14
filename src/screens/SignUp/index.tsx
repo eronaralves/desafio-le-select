@@ -18,7 +18,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 // Components
 import { ForwardedInput } from "../../components/Input";
 import { Button } from "../../components/Buttons";
-import { FooterForm } from "../../components/FooterForm";
+import { CheckBoxForm } from "../../components/CheckBoxForm";
 
 // Styles
 import * as S from "./styles";
@@ -39,6 +39,7 @@ const formSchema = z.object({
 export type FormSignUp = z.infer<typeof formSchema>;
 
 function SignUp() {
+  const [loading, setLoading] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [termoOfUse, setTermoOfUse] = useState(false);
 
@@ -57,18 +58,40 @@ function SignUp() {
   async function onSingInSubmit(formData: FormSignUp) {
     if (termoOfUse) {
       try {
-        const response = await api.post("customers/create", formData);
-        const data = response.data;
+        setLoading(true);
 
-        console.log(data);
+        await api.post("customers/create", formData);
+
         navigate("/login");
 
         toast("Cadastrado com sucesso!", {
           type: "success",
         });
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
+
+        if (error.response.data) {
+          const messagesErrors = Object.values(
+            error.response.data,
+          ).flat() as string[];
+
+          messagesErrors.forEach((message) => {
+            toast(message, {
+              type: "error",
+            });
+          });
+        } else {
+          toast("Erro ao efetuar o cadastro", {
+            type: "error",
+          });
+        }
+      } finally {
+        setLoading(false);
       }
+    } else {
+      toast("Por favor aceite os termos de uso", {
+        type: "info",
+      });
     }
   }
 
@@ -90,6 +113,7 @@ function SignUp() {
                 mask=""
                 placeholder="Digite seu nome"
                 height_input={48}
+                disabled={loading}
                 {...field}
               />
             )}
@@ -108,6 +132,7 @@ function SignUp() {
                 mask=""
                 placeholder="Digite o nome da empresa"
                 height_input={48}
+                disabled={loading}
                 {...field}
               />
             )}
@@ -128,6 +153,7 @@ function SignUp() {
                   mask="99.999.999/9999-99"
                   placeholder="00.000.000/0000-00"
                   height_input={48}
+                  disabled={loading}
                   {...field}
                 />
               )}
@@ -146,6 +172,7 @@ function SignUp() {
                   mask="(99) 9999-9999"
                   placeholder="(xx) xxxx-xxxx"
                   height_input={48}
+                  disabled={loading}
                   {...field}
                 />
               )}
@@ -166,6 +193,7 @@ function SignUp() {
                   mask=""
                   placeholder="Digite seu e-mail"
                   height_input={48}
+                  disabled={loading}
                   {...field}
                 />
               )}
@@ -186,6 +214,7 @@ function SignUp() {
                   icon={isVisiblePassword ? FaRegEye : FaRegEyeSlash}
                   handleIcon={() => setIsVisiblePassword(!isVisiblePassword)}
                   height_input={48}
+                  disabled={loading}
                   {...field}
                 />
               )}
@@ -194,19 +223,23 @@ function SignUp() {
           </S.BoxInputs>
         </S.ContainerInputs>
 
-        <FooterForm
+        <CheckBoxForm
           description="Li e aceito os termos de uso"
           isChecked={termoOfUse}
           setChecked={setTermoOfUse}
         />
 
         <S.ContainerButtons>
-          <Button title="Cadastrar" />
+          <Button
+            title={loading ? "Carregando..." : "Cadastrar"}
+            disabled={loading}
+          />
           <Button
             type="button"
             title="Voltar"
             button_style="SECONDARY"
             onClick={() => navigate("/login")}
+            disabled={loading}
           />
         </S.ContainerButtons>
       </S.ContentForm>
