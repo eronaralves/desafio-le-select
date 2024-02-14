@@ -13,4 +13,6 @@
 + <a href="https://developer.mozilla.org/pt-BR/docs/Web/css" target="_blank">CSS</a>
 <hr/>
 
+application running: <a href="https://desafio-le-select.vercel.app/" target="_blank">https://desafio-le-select.vercel.app/</a>
+
 website made with lots of love ❤️
